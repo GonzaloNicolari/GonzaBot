@@ -5,29 +5,34 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using System.Threading;
 using MyEchoBot.Dialogs;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Schema;
 
 namespace MyEchoBot{
     public class MainDialog : ComponentDialog
     {
-        public MainDialog(string dialogId) : base(dialogId)
+        private readonly UserState _userstate;
+        public MainDialog(UserState userState) : base(nameof(MainDialog))
         {
-            var waterFallSteps = new WaterfallStep[]
-            {
-                NameStepAsync,
-                ExpYearsStepAsync,
+            _userstate = userState;
+            AddDialog(new UserProfileDialog());
 
-            };
-            
+            AddDialog(new WaterfallDialog(nameof(WaterfallStep), new WaterfallStep[]
+            {
+                InitialStepAsync,
+                FinalStepAsync,
+            }));
+            InitialDialogId = nameof(WaterfallStep);
         }
 
         private async Task<DialogTurnResult> InitialStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationtoken)
         {
-            return await stepContext.BeginDialogAsync(nameof(TopLevelDialog), null, cancellationtoken);
+            return await stepContext.BeginDialogAsync(nameof(UserProfileDialog), null, cancellationtoken);
         }
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationtoken)
         {
-            var finishString = "Final Step executed, steps finished.";
-            await stepContext.Context.SendActivityAsync(finishString);
+            var user = stepContext.Values["UserInfo"] as UserProfile;
+            await stepContext.Context.SendActivityAsync(MessageFactory.Text($"sir  this conversation is ending"));
             return await stepContext.EndDialogAsync(null, cancellationtoken);
         }
 

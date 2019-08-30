@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Bot.Builder.Dialogs;
 using MyEchoBot.Bots;
+using MyEchoBot.Dialogs;
 
 namespace MyEchoBot
 {
@@ -39,14 +40,19 @@ namespace MyEchoBot
             // Create the storage we'll be using for User and Conversation state.
             services.AddSingleton<IStorage, MemoryStorage>();
 
-            // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, EchoBot>();
-
             //Create the User state.
             services.AddSingleton<UserState>();
 
             //Create the Conversation state.
             services.AddSingleton<ConversationState>();
+            
+            // The Dialog that will be run by the bot
+            //services.AddSingleton<UserProfileDialog>();
+            services.AddSingleton<MainDialog>();
+            //services.AddSingleton<BotReviewDialog>();
+            
+            // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
+            services.AddTransient<IBot, GonzaBot<MainDialog>>();
 
         }
 

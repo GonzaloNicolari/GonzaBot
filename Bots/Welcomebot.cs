@@ -7,16 +7,17 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
+using Microsoft.Extensions.Logging;
 
 namespace MyEchoBot.Bots
 {
-    public class EchoBot : ActivityHandler
+    public class WelcomeBot<T> : GonzaBot<T> where T : Dialog
     {
-        protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        public WelcomeBot(ConversationState conversationState, UserState userState, T dialog, ILogger<GonzaBot<T>> logger)
+            : base (conversationState, userState, dialog, logger)
         {
-            await turnContext.SendActivityAsync(MessageFactory.Text($"Echo: {turnContext.Activity.Text}"), cancellationToken);
-            
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
