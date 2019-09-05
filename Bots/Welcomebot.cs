@@ -18,6 +18,7 @@ namespace MyEchoBot.Bots
         public WelcomeBot(ConversationState conversationState, UserState userState, T dialog, ILogger<GonzaBot<T>> logger)
             : base (conversationState, userState, dialog, logger)
         {
+
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)

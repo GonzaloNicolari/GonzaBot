@@ -7,15 +7,17 @@ using System.Threading;
 using MyEchoBot.Dialogs;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
+using MyEchoBot.Entities;
 
 namespace MyEchoBot{
     public class MainDialog : ComponentDialog
     {
+        
         private readonly UserState _userstate;
-        public MainDialog(UserState userState) : base(nameof(MainDialog))
+        public MainDialog(UserState userState, BotMLContext botmlContext) : base(nameof(MainDialog))
         {
             _userstate = userState;
-            AddDialog(new UserProfileDialog());
+            AddDialog(new UserProfileDialog(botmlContext));
 
             AddDialog(new WaterfallDialog(nameof(WaterfallStep), new WaterfallStep[]
             {

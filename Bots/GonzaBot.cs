@@ -11,6 +11,7 @@ using NUnit.Framework.Internal;
 using Microsoft.Bot.Builder.Dialogs;
 #pragma warning disable CS0105 // The using directive for 'Microsoft.Extensions.Logging' appeared previously in this namespace
 using Microsoft.Extensions.Logging;
+using MyEchoBot.Entities;
 #pragma warning restore CS0105 // The using directive for 'Microsoft.Extensions.Logging' appeared previously in this namespace
 
 

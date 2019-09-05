@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Bot.Builder.Dialogs;
 using MyEchoBot.Bots;
 using MyEchoBot.Dialogs;
+using MyEchoBot.Entities;
+using Microsoft.ML;
 
 namespace MyEchoBot
 {
@@ -42,6 +44,10 @@ namespace MyEchoBot
 
             //Create the User state.
             services.AddSingleton<UserState>();
+
+            services.AddSingleton<BotMLContext>(new BotMLContext());
+
+          
 
             //Create the Conversation state.
             services.AddSingleton<ConversationState>();

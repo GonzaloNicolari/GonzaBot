@@ -16,12 +16,11 @@ namespace MyEchoBot
         [LoadColumn(3)]
         public float LastEvalLetter { get; set; }
 
-        [LoadColumn(4)]
-        public float PredictionValue { get; set; }
+
     }
     public class UserProfilePrediction
     {
-        [ColumnName("Label")]
+        [ColumnName("Score")]
         public float Prediction;
     }
 }
